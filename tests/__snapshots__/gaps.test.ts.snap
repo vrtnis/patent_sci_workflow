@@ -1,0 +1,21 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`extractGaps > matches snapshot for ambiguous fixture 1`] = `
+[
+  {
+    "evidenceSnippet": "The coating is applied at about 5-10 with no unit indicated. The film is approximately",
+    "message": "Ambiguous quantifier detected: "about".",
+    "type": "AMBIGUOUS_QUANTIFIER",
+  },
+  {
+    "evidenceSnippet": "-10 with no unit indicated. The film is approximately 50 nm thick and is dried for 10 minutes. The d",
+    "message": "Ambiguous quantifier detected: "approximately".",
+    "type": "AMBIGUOUS_QUANTIFIER",
+  },
+  {
+    "evidenceSnippet": "thod comprising mixing components until substantially homogeneous and curing for 2 to 4 hours.",
+    "message": "Ambiguous quantifier detected: "substantially".",
+    "type": "AMBIGUOUS_QUANTIFIER",
+  },
+]
+`;

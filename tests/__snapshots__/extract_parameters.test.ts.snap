@@ -1,0 +1,70 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`extractParameters > matches snapshot for range-heavy fixture 1`] = `
+[
+  {
+    "context": "The temperature is maintained between 150 and 200 C. The pressure is 2-5 bar. A concentration of 0.5-1.0 M is used. The rotation speed is 2000 rpm.",
+    "evidenceSnippet": "2-5 bar",
+    "name": "pressure",
+    "stepId": undefined,
+    "unit": "bar",
+    "valueOrRange": "2-5",
+  },
+  {
+    "context": "s maintained between 150 and 200 C. The pressure is 2-5 bar. A concentration of 0.5-1.0 M is used. The rotation speed is 2000 rpm.",
+    "evidenceSnippet": "0.5-1.0 M",
+    "name": "pressure",
+    "stepId": undefined,
+    "unit": "M",
+    "valueOrRange": "0.5-1.0",
+  },
+  {
+    "context": "The temperature is maintained between 150 and 200 C. The pressure is 2-5 bar. A concentration of 0.5-1.0 M is used. The rotat",
+    "evidenceSnippet": "150 and",
+    "name": "current",
+    "stepId": undefined,
+    "unit": "and",
+    "valueOrRange": "150",
+  },
+  {
+    "context": "The temperature is maintained between 150 and 200 C. The pressure is 2-5 bar. A concentration of 0.5-1.0 M is used. The rotation sp",
+    "evidenceSnippet": "200 C",
+    "name": "temperature",
+    "stepId": undefined,
+    "unit": "C",
+    "valueOrRange": "200",
+  },
+  {
+    "context": "ressure is 2-5 bar. A concentration of 0.5-1.0 M is used. The rotation speed is 2000 rpm.",
+    "evidenceSnippet": "2000 rpm",
+    "name": "speed",
+    "stepId": undefined,
+    "unit": "rpm",
+    "valueOrRange": "2000",
+  },
+  {
+    "context": "Claim 1. A process comprising: heating the substrate to between 150 and 200 C and applying 3.3 V to an electrode.",
+    "evidenceSnippet": "150 and",
+    "name": "current",
+    "stepId": "step-1",
+    "unit": "and",
+    "valueOrRange": "150",
+  },
+  {
+    "context": "Claim 1. A process comprising: heating the substrate to between 150 and 200 C and applying 3.3 V to an electrode.",
+    "evidenceSnippet": "200 C",
+    "name": "temperature",
+    "stepId": "step-1",
+    "unit": "C",
+    "valueOrRange": "200",
+  },
+  {
+    "context": "process comprising: heating the substrate to between 150 and 200 C and applying 3.3 V to an electrode.",
+    "evidenceSnippet": "3.3 V",
+    "name": "voltage",
+    "stepId": "step-1",
+    "unit": "V",
+    "valueOrRange": "3.3",
+  },
+]
+`;

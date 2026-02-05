@@ -1,0 +1,104 @@
+// Vitest Snapshot v1, https://vitest.dev/guide/snapshot.html
+
+exports[`extractWorkflow > matches snapshot for enumerated workflow 1`] = `
+[
+  {
+    "cues": [
+      "enumeration",
+    ],
+    "evidence": {
+      "end": 43,
+      "section": "description",
+      "snippet": "(a)",
+      "start": 40,
+    },
+    "stepId": "step-1",
+    "text": "(a)",
+    "title": "(a)",
+  },
+  {
+    "cues": [
+      "enumeration",
+    ],
+    "evidence": {
+      "end": 67,
+      "section": "description",
+      "snippet": "(b)",
+      "start": 64,
+    },
+    "stepId": "step-2",
+    "text": "(b)",
+    "title": "(b)",
+  },
+  {
+    "cues": [
+      "enumeration",
+    ],
+    "evidence": {
+      "end": 93,
+      "section": "description",
+      "snippet": "(c)",
+      "start": 90,
+    },
+    "stepId": "step-3",
+    "text": "(c)",
+    "title": "(c)",
+  },
+  {
+    "cues": [
+      "then",
+    ],
+    "evidence": {
+      "end": 44,
+      "section": "description",
+      "snippet": "Then the dried cake is milled for 5 minutes.",
+      "start": 0,
+    },
+    "stepId": "step-4",
+    "text": "Then the dried cake is milled for 5 minutes.",
+    "title": "the dried cake is milled for 5 minutes.",
+  },
+  {
+    "cues": [
+      "enumeration",
+    ],
+    "evidence": {
+      "end": 33,
+      "section": "claims",
+      "snippet": "(a)",
+      "start": 30,
+    },
+    "stepId": "step-5",
+    "text": "(a)",
+    "title": "(a)",
+  },
+  {
+    "cues": [
+      "enumeration",
+    ],
+    "evidence": {
+      "end": 65,
+      "section": "claims",
+      "snippet": "(b)",
+      "start": 62,
+    },
+    "stepId": "step-6",
+    "text": "(b)",
+    "title": "(b)",
+  },
+  {
+    "cues": [
+      "enumeration",
+    ],
+    "evidence": {
+      "end": 114,
+      "section": "claims",
+      "snippet": "(c)",
+      "start": 111,
+    },
+    "stepId": "step-7",
+    "text": "(c)",
+    "title": "(c)",
+  },
+]
+`;

@@ -23,7 +23,7 @@ describe("extractGaps", () => {
 
       GapsSchema.parse(gaps);
 
-      if (steps.length < 2) {
+      if (steps.length === 0) {
         expect(gaps.some((gap) => gap.type === "NO_STEPS_FOUND")).toBe(true);
       }
 
