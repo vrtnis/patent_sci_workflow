@@ -85,6 +85,31 @@ npm run add-fixture-from-patentsview -- <PATENT_NUMBER>
 ```
 This saves `tests/fixtures/<PATENT_NUMBER>.json` and adds a structural test file to keep outputs stable.
 
+### Synthetic fixtures (OpenAI)
+Generate edge-case fixtures with GPT-5.2 using structured outputs:
+
+```bash
+export OPENAI_API_KEY="your_key_here"
+npm run fixtures:generate -- --type edge-mix --count 5
+```
+
+Supported types:
+- `weird-claim-numbering`
+- `abc-steps`
+- `ranges-units`
+- `ambiguous-quantifiers`
+- `missing-units`
+- `missing-conditions`
+- `edge-mix`
+- `all` (cycles through each type)
+
+Optional flags:
+- `--model gpt-5.2`
+- `--batch 2026-02-05`
+- `--temperature 0.4`
+
+Synthetic fixtures are saved as `tests/fixtures/SYN-<type>-<batch>-NN.json` and automatically validated in `tests/synthetic_fixtures.test.ts`.
+
 ## Testing
 ```bash
 npm test

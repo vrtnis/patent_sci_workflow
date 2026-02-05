@@ -10,7 +10,8 @@
     "test": "vitest run",
     "test:watch": "vitest",
     "ci": "node tools/ci.mjs",
-    "add-fixture-from-patentsview": "node tools/add_fixture.mjs"
+    "add-fixture-from-patentsview": "node tools/add_fixture.mjs",
+    "fixtures:generate": "node tools/generate_fixtures.mjs"
   },
   "dependencies": {
     "mermaid": "10.9.0",
