@@ -1,6 +1,7 @@
 "use client";
 
 import { useState } from "react";
+import MermaidDiagram from "@/components/MermaidDiagram";
 
 type WorkflowStep = {
   stepId: string;
@@ -198,6 +199,7 @@ export default function Home() {
 
             <article className="panel">
               <h2>diagram.mmd</h2>
+              <MermaidDiagram chart={job.diagram ?? ""} />
               <pre>{job.diagram ?? "Mermaid diagram not generated."}</pre>
             </article>
           </div>

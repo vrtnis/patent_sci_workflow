@@ -1,0 +1,4 @@
+interface:
+  display_name: "Patent Workflow Mermaid"
+  short_description: "Render Mermaid charts in this MVP UI"
+  default_prompt: "Use $patent-workflow-mermaid to render diagram.mmd in the Next.js UI."
