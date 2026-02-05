@@ -93,6 +93,8 @@ export OPENAI_API_KEY="your_key_here"
 npm run fixtures:generate -- --type edge-mix --count 5
 ```
 
+If you run these via Codex automations, you can also set `OPENAI_API_KEY` in a local `.env` file in the repo. The generators will load it automatically.
+
 Supported types:
 - `weird-claim-numbering`
 - `abc-steps`
@@ -117,6 +119,8 @@ Generate a pack in `tests/fixtures/synth/<timestamp>/` with a targeted challenge
 export OPENAI_API_KEY="your_key_here"
 npm run gen:fixtures -- --count 20 --include-failing 1 --type edge-mix
 ```
+
+`.env` is also supported for automation runs.
 
 This writes:
 - `tests/fixtures/synth/<timestamp>/` JSON fixtures + `manifest.json`

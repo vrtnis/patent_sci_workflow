@@ -1,4 +1,4 @@
-import { mkdir, readdir, writeFile } from "node:fs/promises";
+import { mkdir, readdir, readFile, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const DEFAULT_MODEL = "gpt-5.2";
@@ -26,6 +26,41 @@ const usage = () => {
   console.log(`Usage: node tools/generate_fixtures.mjs --type <type> --count <n> [--model <model>] [--batch <tag>] [--temperature <n>]
 
 Types: ${Object.keys(FIXTURE_TYPES).join(", ")} | all`);
+};
+
+const loadEnvFromFile = async () => {
+  const envPath = path.join(process.cwd(), ".env");
+  try {
+    const raw = await readFile(envPath, "utf-8");
+    raw.split(/\r?\n/).forEach((line) => {
+      const trimmed = line.trim();
+      if (!trimmed || trimmed.startsWith("#")) {
+        return;
+      }
+      const eqIndex = trimmed.indexOf("=");
+      if (eqIndex === -1) {
+        return;
+      }
+      const key = trimmed.slice(0, eqIndex).trim();
+      let value = trimmed.slice(eqIndex + 1).trim();
+      if (!key || process.env[key]) {
+        return;
+      }
+      if (
+        (value.startsWith("\"") && value.endsWith("\"")) ||
+        (value.startsWith("'") && value.endsWith("'"))
+      ) {
+        value = value.slice(1, -1);
+      }
+      if (value) {
+        process.env[key] = value;
+      }
+    });
+  } catch (error) {
+    if (error.code !== "ENOENT") {
+      throw error;
+    }
+  }
 };
 
 const parseArgs = () => {
@@ -240,6 +275,7 @@ const callOpenAI = async ({ model, prompt, temperature }) => {
 };
 
 const main = async () => {
+  await loadEnvFromFile();
   const options = parseArgs();
   if (options.help) {
     usage();
