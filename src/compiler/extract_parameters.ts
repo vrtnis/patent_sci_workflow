@@ -5,14 +5,14 @@ const RANGE_REGEX =
 const VALUE_REGEX = /(\d+(?:\.\d+)?)\s*([a-zA-Z%/]+)\b/gi;
 
 const UNIT_NAME_MAP: Array<{ pattern: RegExp; name: string }> = [
-  { pattern: /c|f|k/i, name: "temperature" },
+  { pattern: /^(c|f|k)$/i, name: "temperature" },
   { pattern: /s|sec|secs|second|seconds|min|mins|minute|minutes|h|hr|hrs|hour|hours/i, name: "time" },
   { pattern: /pa|kpa|mpa|bar|psi/i, name: "pressure" },
   { pattern: /v|mv|kv/i, name: "voltage" },
   { pattern: /a|ma/i, name: "current" },
   { pattern: /rpm|m\/s|cm\/s|m\/min|cm\/min/i, name: "speed" },
-  { pattern: /%|wt%|ppm|ppb|m|mmol|mol|mM|uM/i, name: "concentration" },
-  { pattern: /nm|um|mm|cm|m\b/i, name: "length" },
+  { pattern: /%|wt%|ppm|ppb|\\bM\\b|mM|uM|mol|mmol/i, name: "concentration" },
+  { pattern: /nm|um|mm|cm|m\\b/i, name: "length" },
   { pattern: /g|mg|kg|ug/i, name: "mass" },
   { pattern: /l|ml|ul/i, name: "volume" }
 ];

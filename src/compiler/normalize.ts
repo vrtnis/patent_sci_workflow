@@ -21,7 +21,7 @@ const normalizeParagraphs = (text: string): string[] => {
   return text
     .split(/\r?\n{2,}/)
     .map((paragraph) =>
-      paragraph.replace(/°/g, "").replace(/\s+/g, " ").trim()
+      paragraph.replace(/\u00b0/g, "").replace(/\s+/g, " ").trim()
     )
     .filter(Boolean);
 };
@@ -32,14 +32,14 @@ const formatClaimsText = (claims: PatentClaim[]): string => {
     .sort((a, b) => a.claim_sequence - b.claim_sequence)
     .map((claim) => {
       const number = claim.claim_number ?? claim.claim_sequence;
-      return `Claim ${number}. ${claim.claim_text}`.replace(/°/g, "");
+      return `Claim ${number}. ${claim.claim_text}`.replace(/\u00b0/g, "");
     })
     .join("\n");
 };
 
 const formatDescriptionText = (descriptions: PatentDescription[]): string => {
   return descriptions
-    .map((desc) => desc.description_text.replace(/°/g, ""))
+    .map((desc) => desc.description_text.replace(/\u00b0/g, ""))
     .join("\n\n")
     .trim();
 };
