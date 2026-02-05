@@ -6,13 +6,13 @@
       "patent_id": "FIX-ENUM-001",
       "claim_sequence": 1,
       "claim_number": "1",
-      "claim_text": "A method comprising: (a) mixing a resin and solvent; (b) heating the mixture at 120 C for 30 minutes; (c) cooling the mixture to 25 C."
+      "claim_text": "A method comprising: (a) combining an active pharmaceutical ingredient with a pharmaceutically acceptable carrier; (b) granulating the blend at 40 C for 20 minutes; (c) drying the granules to a moisture content below 2%."
     }
   ],
   "description": [
     {
       "patent_id": "FIX-ENUM-001",
-      "description_text": "In one embodiment, the process includes (a) preparing a slurry; (b) filtering the slurry; (c) drying the filter cake. The slurry may be heated to 80 C.\n\nThen the dried cake is milled for 5 minutes."
+      "description_text": "In one embodiment, the process includes (a) preparing a granulation blend; (b) wet granulating the blend; (c) drying the granules. The blend may be warmed to 35 C.\n\nThen the dried granules are milled for 5 minutes prior to tablet compression."
     }
   ]
 }

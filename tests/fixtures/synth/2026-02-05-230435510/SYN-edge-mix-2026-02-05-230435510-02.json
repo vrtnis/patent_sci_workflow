@@ -1,0 +1,58 @@
+{
+  "patentNumber": "SYN-edge-mix-2026-02-05-230435510-02",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "1. A method for adaptive message handling at an edge node, comprising: (a) receiving, over a network interface, a stream of messages each including a payload and a metadata header; (b) extracting from the metadata header a topic identifier and a latency hint; (c) assigning each message to one of a plurality of processing lanes based on at least the topic identifier and an observed queue depth; (d) transforming the payload by applying a normalization routine selected from a set of routines; and (e) emitting a transformed message to a downstream consumer while recording an audit record.",
+      "claim_dependent": false
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "claim_sequence": 2,
+      "claim_number": "1.1",
+      "claim_text": "1.1 The method of claim 1, wherein assigning each message to one of the processing lanes comprises computing a score using (i) a moving average of queue depth over 5-30 ms and (ii) a penalty factor of 0.2-0.9, and selecting a lane having a score within 10-70 of a best score.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "claim_sequence": 3,
+      "claim_number": "2",
+      "claim_text": "2. The method of claim 1, further comprising: (a) caching at least some transformed messages in a local store for 1-24 hours; (b) evicting cached transformed messages when a storage watermark exceeds 60-95%; and (c) replaying cached transformed messages to the downstream consumer upon detecting a reconnect event.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "claim_sequence": 4,
+      "claim_number": "III",
+      "claim_text": "III. The method of claim 1, wherein the normalization routine includes: (a) tokenizing the payload into fields; (b) mapping at least one field to a canonical label set; and (c) generating a compact representation having a size of 128-2048 bytes, and wherein the compact representation is generated using 2-7 passes.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "claim_sequence": 5,
+      "claim_number": "4(a)",
+      "claim_text": "4(a). The method of claim 1, further comprising selecting the normalization routine by: (a) sampling a subset of messages; (b) estimating an error metric from the subset; and (c) switching to a different routine when the error metric is greater than 3-9.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "claim_sequence": 6,
+      "claim_number": "5",
+      "claim_text": "5. The method of claim 1, wherein recording the audit record comprises storing a hash of the transformed message and a timestamp, and wherein the hash is computed using a digest length of 64-512 bits and a salt value of 10-40.",
+      "claim_dependent": true
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "description_text": "An edge node may receive heterogeneous messages from sensors, applications, or gateways and forward the messages to a downstream consumer such as a broker or analytics service. In some implementations, the edge node performs normalization and lane assignment to reduce jitter and to improve throughput under variable load. The edge node can maintain multiple processing lanes, each lane having an independent queue and a worker that applies a selected normalization routine.\n\nA procedure may be executed as follows: first, ingest a message stream and parse a metadata header to obtain a topic identifier and a latency hint; next, compute a lane score from recent queue depth and select a lane; then, apply a normalization routine to the payload and emit a transformed message. In parallel, an audit record may be written to a local store, and a cache may retain some transformed messages for later replay. In some cases, the cache is replayed after a reconnect event, and the replay can be performed in batches of 50-500 messages."
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-02",
+      "description_text": "The normalization routine can include tokenization, field mapping, and compact representation generation. Tokenization may split the payload into fields based on delimiters, and field mapping may map at least one field to a canonical label set. The compact representation may be produced in multiple passes, and a pass count may be selected based on an observed error metric.\n\nOperationally, the edge node may periodically sample a subset of messages, estimate an error metric, and switch routines when the error metric exceeds a threshold. A workflow step can be interpreted as: open a connection, send a test batch, and confirm receipt before enabling replay. The audit record may store a hash and timestamp for each transformed message, and the local store may be rotated when a storage watermark is exceeded."
+    }
+  ]
+}

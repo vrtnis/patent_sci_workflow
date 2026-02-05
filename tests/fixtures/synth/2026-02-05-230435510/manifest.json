@@ -1,0 +1,16 @@
+{
+  "packId": "2026-02-05-230435510",
+  "createdAt": "2026-02-05T23:05:19.961Z",
+  "model": "gpt-5.2",
+  "temperature": 0.4,
+  "count": 3,
+  "includeFailing": 1,
+  "types": [
+    "edge-mix"
+  ],
+  "challenge": {
+    "fixture": "/Users/user947388/Desktop/pat1/patent_sci_workflow/tests/fixtures/synth/2026-02-05-230435510/SYN-CHALLENGE-2026-02-05-230435510.json",
+    "test": "/Users/user947388/Desktop/pat1/patent_sci_workflow/tests/fixtures/synth/2026-02-05-230435510/challenge-2026-02-05-230435510.test.ts",
+    "expectedFailure": "challenge fixture should trigger either a parameter with unit or RANGE_WITHOUT_UNIT gap"
+  }
+}

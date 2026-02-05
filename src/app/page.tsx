@@ -92,18 +92,20 @@ export default function Home() {
     <main className="page">
       <header className="hero">
         <div>
-          <p className="eyebrow">Patent Workflow Extractor MVP</p>
-          <h1>Compile Methods-Style Workflows from Granted Patents.</h1>
+          <p className="eyebrow">Patent-to-Scientific Workflow Compiler</p>
+          <h1>Turn patents into usable scientific experiment protocols.</h1>
           <p className="subtitle">
-            Deterministic extraction of ordered steps, parameters, and
-            reproducibility gaps with stable JSON artifacts.
+            For scientists: ordered steps, parameters with units and ranges,
+            plus reproducibility gaps when patents leave things underspecified.
+            For developers: healing-friendly fixtures that turn edge cases into
+            permanent regression tests.
           </p>
         </div>
         <div className="callout">
-          <p className="callout-title">Input</p>
+          <p className="callout-title">What it does</p>
           <p className="callout-body">
-            Provide a granted patent number or select a local fixture for
-            offline compilation.
+            Export stable JSON and a readable report/diagram, built for rapid
+            debugging and clean, reviewable fixes.
           </p>
         </div>
       </header>
@@ -200,7 +202,10 @@ export default function Home() {
             <article className="panel">
               <h2>diagram.mmd</h2>
               <MermaidDiagram chart={job.diagram ?? ""} />
-              <pre>{job.diagram ?? "Mermaid diagram not generated."}</pre>
+              <details className="mermaid-raw">
+                <summary>View raw Mermaid text</summary>
+                <pre>{job.diagram ?? "Mermaid diagram not generated."}</pre>
+              </details>
             </article>
           </div>
         </section>

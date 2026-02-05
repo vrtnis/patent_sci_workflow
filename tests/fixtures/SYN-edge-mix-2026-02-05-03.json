@@ -1,0 +1,47 @@
+{
+  "patentNumber": "SYN-edge-mix-2026-02-05-03",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-03",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "1. A method for adaptive edge-mixing of sensor events in a distributed system, the method comprising: (a) receiving, at an edge node, a stream of event records from at least two sensors, each event record including a timestamp and a payload; (b) assigning each event record to one of a plurality of mixing bins based on a hash of at least a portion of the payload and a time window of 10 ms to 2 s; (c) generating, for each mixing bin, a mixed record by combining at least some of the payloads using a weighted operator selected from averaging, median, or majority vote; (d) emitting the mixed record to an upstream service when an ambiguity score exceeds a threshold or when a bin contains between 3 and 11 event records; and (e) storing, in a local cache, a provenance tuple identifying the sensors and the weighted operator, wherein the method uses a cache size of 64 to 512 and a retry count of 1 to 9.",
+      "claim_dependent": false
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-03",
+      "claim_sequence": 2,
+      "claim_number": "2",
+      "claim_text": "2. The method of claim 1, wherein step (c) comprises selecting the weighted operator by computing a stability metric over a trailing window of 5 to 30 samples and selecting a more conservative operator when the stability metric is below 0.6.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-03",
+      "claim_sequence": 3,
+      "claim_number": "2a",
+      "claim_text": "2a. The method of claim 1, further comprising: (a) generating a routing hint for the upstream service by encoding a bin identifier and a confidence value into a header; and (b) delaying emission by 20 ms to 250 ms when at least one sensor is marked as intermittent.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-03",
+      "claim_sequence": 4,
+      "claim_number": "III",
+      "claim_text": "III. The method of claim 1, wherein the ambiguity score is computed from (i) a disagreement count among sensors, (ii) a recency factor, and (iii) a missingness factor, and wherein the disagreement count is computed over a window length of 0.5 s to 8 s and the missingness factor is clipped to 0 to 1.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-03",
+      "claim_sequence": 5,
+      "claim_number": "4(b)",
+      "claim_text": "4(b). The method of claim 1, further comprising: (a) writing the provenance tuple to a log file in lines of 80 to 240 bytes; (b) rotating the log file after 2 to 9; and (c) rehydrating the local cache from the log file upon restart.",
+      "claim_dependent": true
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-03",
+      "description_text": "Field and overview. This disclosure relates to processing sensor events at an edge node and mixing the events into mixed records for upstream consumption. In some deployments, sensors produce partially redundant payloads with inconsistent timing, and the edge node performs binning, mixing, and emission to reduce bandwidth while preserving salient signals. The edge node may be a gateway, a microcontroller, or a containerized service executing on a local compute device.\n\nProcedure. In an example procedure, the edge node receives event records from multiple sensors and normalizes timestamps into a local timeline. The node assigns each event record to a mixing bin using a hash of a payload portion and a time window, and then computes a mixed record for each bin using a selected weighted operator. Next, the node emits the mixed record to an upstream service and stores a provenance tuple in a local cache; then the node repeats the procedure for subsequent event records. A sentence that can be interpreted as a workflow step is: open the bin, mix the payloads, and forward the result.\n\nOperator selection and thresholds. The weighted operator can be selected based on a stability metric computed over a trailing window of samples. When the stability metric indicates instability, the node may choose a conservative operator such as median or majority vote. The node may compute an ambiguity score from disagreement, recency, and missingness, and may emit a mixed record when the ambiguity score exceeds a threshold or when a bin accumulates a certain number of event records.\n\nLogging and restart behavior. The node can write provenance tuples to a log file and rotate the log file after a configured amount. Upon restart, the node can rehydrate the local cache from the log file and resume binning and mixing without requiring upstream state. In some cases, the node delays emission for a short interval to allow late-arriving sensor events to be included in the same mixing bin."
+    }
+  ]
+}

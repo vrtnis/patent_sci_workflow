@@ -1,0 +1,51 @@
+{
+  "patentNumber": "SYN-edge-mix-2026-02-05-230435510-01",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-01",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "1. A computer-implemented method for adaptive data handling at an edge node, comprising: (a) receiving, at the edge node, a stream of events from a plurality of client devices; (b) deriving a feature vector for each event including at least a device identifier, a time value, and a content hash; (c) selecting, by a policy engine, one of a first path that forwards the event to a remote service and a second path that performs local inference, wherein the selecting is based on a score computed from the feature vector and an availability indicator; (d) when the second path is selected, executing a local model to produce an action recommendation and storing an audit record; and (e) emitting a response to the client device within 20 ms to 800 ms.",
+      "claim_dependent": false
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-01",
+      "claim_sequence": 2,
+      "claim_number": "1.1",
+      "claim_text": "1.1 The method of claim 1, wherein the policy engine computes the score using a weighted sum that includes a latency term, a privacy term, and a cost term, and wherein the weighted sum uses between 2 and 7 weights.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-01",
+      "claim_sequence": 3,
+      "claim_number": "II",
+      "claim_text": "II. The method of claim 1, further comprising: (a) batching a subset of the events into a batch size of 3 to 19; (b) compressing the batch using a dictionary selected from at least one of LZ4, Zstandard, or a proprietary codec; and (c) transmitting the compressed batch over a link having a payload of 64 kB to 512 kB, wherein the subset includes some events.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-01",
+      "claim_sequence": 4,
+      "claim_number": "3a",
+      "claim_text": "3a. The method of claim 1, wherein storing the audit record comprises writing, to a tamper-evident log, a record including (i) the content hash, (ii) a model version identifier, and (iii) a confidence value, and wherein the confidence value is compared to 0.2 to 0.9.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-01",
+      "claim_sequence": 5,
+      "claim_number": "4",
+      "claim_text": "4. The method of claim 1, further comprising: (a) selecting a sampling interval of 5 to 30; (b) updating the local model using a gradient step computed from a window of 10 s to 120 s of events; and (c) persisting a checkpoint when a drift metric exceeds a threshold.",
+      "claim_dependent": true
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-01",
+      "description_text": "This disclosure relates to edge computing systems that dynamically choose between local processing and remote processing for event streams. In some implementations, an edge node receives events from multiple client devices, normalizes the events into a common schema, and computes a feature vector that includes identifiers, timing information, and content-derived hashes. The edge node then applies a policy engine to select a processing path, such as forwarding to a remote service or running a local inference model. The selection may consider latency, privacy, cost, and availability, and may use an ambiguous amount of historical context. In a typical deployment, the response is returned to the client device within 20 ms to 800 ms, although the system may operate outside that range.\n\nAn example procedure can be executed as a workflow: first ingest events, then score each event, then route the event, then record an audit entry, and finally respond to the client. In one procedure, the edge node batches some events, compresses the batch, and transmits the batch to a remote service for archival or secondary analysis. The batch size may be 3 to 19, and a payload may be 64 kB to 512 kB depending on implementation. The edge node can also maintain a tamper-evident log by appending records that include a model version identifier and a confidence value. A sampling interval may be set to 5 to 30, and periodic updates may be performed using a window of 10 s to 120 s of events. When drift is detected, a checkpoint can be persisted, and the remote service may later reconcile the checkpoint with other nodes."
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-230435510-01",
+      "description_text": "In further embodiments, the policy engine may be implemented as a ruleset, a learned classifier, or a hybrid that combines both. For example, the policy engine can compute a score as a weighted sum of terms, where the number of weights is between 2 and 7, and where at least one term is derived from observed queue depth or link quality. The edge node may store audit records locally and optionally replicate the records to a remote ledger. In some cases, the system uses a confidence value in the range 0.2 to 0.9 to decide whether to request additional verification, but other interpretations are possible.\n\nA procedural implementation may include the following: (a) receive an event; (b) derive features; (c) select a path; (d) execute local inference when selected; (e) write an audit record; and (f) emit a response. The procedure may be repeated for each event in the stream and may be parallelized across threads or processes. In some deployments, the edge node updates the local model by computing a gradient step from recent events and persisting a checkpoint when a drift metric exceeds a threshold. The drift metric can be computed using a sliding window and may be tuned by an operator, and the system may keep some events for later replay."
+    }
+  ]
+}

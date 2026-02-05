@@ -191,6 +191,24 @@ pre {
     Consolas, "Liberation Mono", "Courier New", monospace;
 }
 
+.mermaid-raw {
+  margin-top: 8px;
+}
+
+.mermaid-raw summary {
+  cursor: pointer;
+  font-size: 0.85rem;
+  color: var(--muted);
+}
+
+.mermaid-diagram svg {
+  width: 100%;
+}
+
+.mermaid-diagram text {
+  fill: var(--ink);
+}
+
 .stack {
   display: flex;
   flex-direction: column;

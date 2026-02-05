@@ -1,7 +1,7 @@
 import type { NormalizedPatent, Parameter } from "./types";
 
 const RANGE_REGEX =
-  /(\d+(?:\.\d+)?)\s*(?:-|to)\s*(\d+(?:\.\d+)?)(?:\s*([a-zA-Z%/]+))?/gi;
+  /(\d+(?:\.\d+)?)\s*(?:-|to|~)\s*(\d+(?:\.\d+)?)(?:\s*([a-zA-Z%/]+))?/gi;
 const VALUE_REGEX = /(\d+(?:\.\d+)?)\s*([a-zA-Z%/]+)\b/gi;
 
 const UNIT_NAME_MAP: Array<{ pattern: RegExp; name: string }> = [

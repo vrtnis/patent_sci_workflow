@@ -25,7 +25,23 @@ export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
     (async () => {
       try {
         const mermaid = (await import("mermaid")).default;
-        mermaid.initialize({ startOnLoad: false, securityLevel: "strict" });
+        mermaid.initialize({
+          startOnLoad: false,
+          securityLevel: "strict",
+          theme: "base",
+          flowchart: {
+            htmlLabels: false
+          },
+          themeVariables: {
+            primaryTextColor: "#1a1a1a",
+            textColor: "#1a1a1a",
+            lineColor: "#5a5a5a",
+            nodeBorder: "#8d7a63",
+            primaryColor: "#f2ece3",
+            secondaryColor: "#ffffff",
+            tertiaryColor: "#f9f4ec"
+          }
+        });
         const { svg } = await mermaid.render(`mermaid-${id}`, chart);
         if (active) {
           setSvg(svg);
@@ -50,5 +66,10 @@ export default function MermaidDiagram({ chart }: MermaidDiagramProps) {
     return <div />;
   }
 
-  return <div dangerouslySetInnerHTML={{ __html: svg }} />;
+  return (
+    <div
+      className="mermaid-diagram"
+      dangerouslySetInnerHTML={{ __html: svg }}
+    />
+  );
 }

@@ -1,0 +1,54 @@
+{
+  "patentNumber": "SYN-edge-mix-2026-02-05-01",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-01",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "1. A method for operating a distributed sensing system, comprising: (a) receiving, at an edge gateway, a stream of sensor frames from a plurality of field devices over a packet network; (b) segmenting the stream into windows having a duration of 50 ms to 3 s; (c) for each window, generating a feature vector including at least one spectral coefficient and at least one timing statistic; (d) selecting, using a policy table, one of a local inference path and a remote inference path based on an estimated link quality value; (e) when the local inference path is selected, executing a compact model to produce an event label; (f) when the remote inference path is selected, transmitting a reduced representation of the window to a remote service; and (g) writing an audit record that includes the event label and a confidence score to a log store.",
+      "claim_dependent": false
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-01",
+      "claim_sequence": 2,
+      "claim_number": "1a",
+      "claim_text": "1a. The method of claim 1, wherein the reduced representation comprises a sketch formed by retaining 5 to 40 coefficients per channel and discarding samples outside a selected band of 10 Hz to 2.5 kHz.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-01",
+      "claim_sequence": 3,
+      "claim_number": "2",
+      "claim_text": "2. The method of claim 1, further comprising: (a) buffering windows in a queue having a depth of 2 to 12; (b) assigning each buffered window a priority score based on at least one of device identity, a recent error count, and a user preference; and (c) draining the queue according to the priority score so that some windows are transmitted before others.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-01",
+      "claim_sequence": 4,
+      "claim_number": "III",
+      "claim_text": "III. The method of claim 1, wherein estimating the link quality value comprises combining a round trip time in a range of 5 ms to 800 ms with a packet loss estimate in a range of 0.1% to 12%, and wherein the policy table selects the local inference path when the combined value exceeds a threshold of 0.6.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-01",
+      "claim_sequence": 5,
+      "claim_number": "4(b)",
+      "claim_text": "4(b). The method of claim 1, wherein generating the feature vector further comprises normalizing at least some samples by a scale factor of 2 to 9 and applying a smoothing kernel having a width of 3 to 17.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-01",
+      "claim_sequence": 6,
+      "claim_number": "5",
+      "claim_text": "5. The method of claim 1, further comprising, after writing the audit record, presenting a notification to an operator when an event label matches one of several predefined categories, the notification including a suggested action and a timestamp.",
+      "claim_dependent": true
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-01",
+      "description_text": "A distributed sensing deployment may include many field devices that produce time-series frames such as vibration samples, acoustic samples, or electrical measurements. An edge gateway can be positioned near the field devices to reduce backhaul usage while still enabling centralized analytics. In some implementations, the gateway receives frames, groups them into windows, and computes features that are suitable for a compact model. The gateway may decide, for each window, whether to run inference locally or to forward a reduced representation to a remote service. A technician can follow a workflow step: open the gateway console, select a device group, and press \"Start capture\" to begin streaming frames into the windowing pipeline.\n\nIn one procedure, the gateway maintains a policy table that maps a link quality value and a device class to an action. The link quality value can be derived from network measurements such as round trip time, packet loss, and jitter, and can be updated periodically. When the policy table indicates local inference, the gateway executes a compact model and writes an audit record containing an event label and a confidence score. When the policy table indicates remote inference, the gateway forms a sketch by retaining a subset of coefficients and transmits the sketch to the remote service, which returns an event label. The gateway can buffer windows in a priority queue so that urgent windows are drained earlier than less urgent windows, and the queue depth may be adjusted during operation.\n\nTo support auditing and troubleshooting, the audit record may include a device identifier, a window identifier, and a short explanation string. In some cases, the gateway normalizes samples by a scale factor and applies a smoothing kernel before feature extraction. The smoothing kernel width may be selected from 3 to 17, and a user may choose a different width for different device groups. The system may also apply a band selection such as 10 Hz to 2.5 kHz when forming the sketch, although other bands can be used. In certain deployments, the gateway uses a queue depth of 2 to 12 and a threshold of 0.6 for selecting local inference, while other deployments use different values."
+    }
+  ]
+}

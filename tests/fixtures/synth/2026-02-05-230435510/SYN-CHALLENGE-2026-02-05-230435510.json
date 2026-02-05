@@ -1,0 +1,26 @@
+{
+  "patentNumber": "SYN-CHALLENGE-2026-02-05-230435510",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "SYN-CHALLENGE-2026-02-05-230435510",
+      "claim_sequence": 1,
+      "claim_number": "I",
+      "claim_text": "A method comprising: (a) mixing a composition; (b) setting a process window of 10~20; and (c) completing the process.",
+      "claim_dependent": null
+    },
+    {
+      "patent_id": "SYN-CHALLENGE-2026-02-05-230435510",
+      "claim_sequence": 2,
+      "claim_number": "II",
+      "claim_text": "The method of claim I, wherein the mixture is processed in the stated window.",
+      "claim_dependent": true
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "SYN-CHALLENGE-2026-02-05-230435510",
+      "description_text": "In one embodiment, the method includes blending the composition and holding the process window at 10~20.\n\nThe process proceeds by combining the inputs, then finishing the batch without further conditions."
+    }
+  ]
+}

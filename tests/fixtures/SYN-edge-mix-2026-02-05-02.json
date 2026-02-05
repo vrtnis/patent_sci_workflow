@@ -1,0 +1,58 @@
+{
+  "patentNumber": "SYN-edge-mix-2026-02-05-02",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "1. A computer-implemented method for mixed edge processing of sensor events, the method comprising: (a) receiving, at an edge node, a stream of event records from one or more sensors, each event record including a timestamp and a payload; (b) partitioning the stream into windows of 50 ms to 2 s and generating, for each window, a feature vector including at least a count and a dispersion value; (c) selecting, using a policy table, whether to execute an inference model locally or to forward the feature vector to a remote service; (d) when executing locally, producing a classification label and an uncertainty score; (e) when forwarding, transmitting the feature vector and receiving a remote classification label; and (f) emitting an action message to a downstream controller when the classification label satisfies a threshold, wherein the threshold is between 0.2 and 0.9.",
+      "claim_dependent": false
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "claim_sequence": 2,
+      "claim_number": "1.1",
+      "claim_text": "1.1 The method of claim 1, wherein the policy table is updated at an interval of 10 s to 30 min based on observed network latency and a rolling error estimate.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "claim_sequence": 3,
+      "claim_number": "2",
+      "claim_text": "2. The method of claim 1, further comprising: (a) caching, at the edge node, a model artifact having a size of 2 MB to 200 MB; (b) validating the model artifact using a checksum; and (c) switching from a first model version to a second model version after processing N windows, where N is 3 to 12.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "claim_sequence": 4,
+      "claim_number": "III",
+      "claim_text": "III. The method of claim 1, wherein the feature vector further includes a normalized energy value computed over 5 to 40 samples, and wherein the method stores at least some of the event records for 7 to 90.",
+      "claim_dependent": true
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "claim_sequence": 5,
+      "claim_number": "4(a)",
+      "claim_text": "4(a) A method of coordinating multiple edge nodes, comprising: (a) broadcasting a heartbeat message at a rate of 0.5 Hz to 5 Hz; (b) electing a leader edge node based on a score that includes an available memory value and a recent failure count; (c) assigning, by the leader edge node, a subset of sensors to each edge node such that each sensor is assigned to at least one edge node and at most a few edge nodes; and (d) reassigning a sensor when a heartbeat is missed for 2 to 6.",
+      "claim_dependent": false
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "claim_sequence": 6,
+      "claim_number": "4(b)",
+      "claim_text": "4(b) The method of claim 4(a), wherein reassigning includes sending a workflow instruction that causes a node to fetch configuration, apply the configuration, and then begin processing within 100 ms to 3 s.",
+      "claim_dependent": true
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "description_text": "The disclosure relates to mixed edge and remote processing of sensor-derived events. In an example deployment, an edge node receives event records from multiple sensors, groups the event records into time windows, and computes features used for classification. A policy table controls whether inference is executed locally or forwarded to a remote service, and the policy table may be updated based on observed latency, error, or resource usage. In one procedure, the system performs: collect events, compute features, choose execution location, run inference, and emit an action message to a controller.\n\nA representative implementation may include a cache for model artifacts and a mechanism for switching model versions. The edge node can store some event records for later audit, and can transmit summaries rather than raw payloads. In a coordination procedure across multiple edge nodes, a heartbeat is broadcast, a leader is elected, and sensor assignments are distributed; if a heartbeat is missed, a reassignment is triggered and a node is instructed to fetch configuration, apply the configuration, and then begin processing. The policy may specify window sizes from 50 ms to 2 s, model artifact sizes from 2 MB to 200 MB, and a switching count N of 3 to 12 windows, while other values may be left open for tuning such as storing records for 7 to 90 and treating a missed-heartbeat count of 2 to 6 as sufficient."
+    },
+    {
+      "patent_id": "SYN-edge-mix-2026-02-05-02",
+      "description_text": "In some embodiments, the feature computation includes a normalized energy value derived from a fixed number of samples and a dispersion value derived from the payload distribution. The system may apply ambiguous quantifiers in policy rules, for example assigning each sensor to at most a few edge nodes, or storing at least some event records when bandwidth is limited. A workflow can be implemented as a sequence of steps executed by a task runner: obtain the latest policy table, validate a model artifact, process windows, and publish action messages to a downstream controller.\n\nProcedurally, an edge node can execute (a) receive event records, (b) partition into windows, (c) compute features, (d) decide local versus remote inference, (e) generate a label and uncertainty, and (f) log results and optionally store event records. If remote inference is selected, the edge node transmits the feature vector and receives a remote label, then continues processing subsequent windows. In a failure scenario, the leader node can reassign sensors and instruct a replacement node to fetch configuration, apply the configuration, and begin processing within a target time, while leaving some parameters unspecified for later configuration such as 2 to 6 and 7 to 90."
+    }
+  ]
+}
