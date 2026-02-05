@@ -1,0 +1,18 @@
+{
+  "patentNumber": "FIX-AMBIG-003",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "FIX-AMBIG-003",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "A method comprising mixing components until substantially homogeneous and curing for 2 to 4 hours."
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "FIX-AMBIG-003",
+      "description_text": "The coating is applied at about 5-10 with no unit indicated. The film is approximately 50 nm thick and is dried for 10 minutes. The device is operated at 5 for 10 minutes."
+    }
+  ]
+}

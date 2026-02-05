@@ -1,0 +1,18 @@
+{
+  "patentNumber": "FIX-ENUM-001",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "FIX-ENUM-001",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "A method comprising: (a) mixing a resin and solvent; (b) heating the mixture at 120 C for 30 minutes; (c) cooling the mixture to 25 C."
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "FIX-ENUM-001",
+      "description_text": "In one embodiment, the process includes (a) preparing a slurry; (b) filtering the slurry; (c) drying the filter cake. The slurry may be heated to 80 C.\n\nThen the dried cake is milled for 5 minutes."
+    }
+  ]
+}

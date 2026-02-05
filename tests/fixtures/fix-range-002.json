@@ -1,0 +1,18 @@
+{
+  "patentNumber": "FIX-RANGE-002",
+  "source": "fixture",
+  "claims": [
+    {
+      "patent_id": "FIX-RANGE-002",
+      "claim_sequence": 1,
+      "claim_number": "1",
+      "claim_text": "A process comprising: heating the substrate to between 150 and 200 C and applying 3.3 V to an electrode."
+    }
+  ],
+  "description": [
+    {
+      "patent_id": "FIX-RANGE-002",
+      "description_text": "The temperature is maintained between 150 and 200 C. The pressure is 2-5 bar. A concentration of 0.5-1.0 M is used. The rotation speed is 2000 rpm."
+    }
+  ]
+}
