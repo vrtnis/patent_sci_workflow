@@ -228,7 +228,6 @@ const callOpenAI = async ({ model, prompt, temperature }) => {
         { role: "user", content: prompt }
       ],
       tools: [buildToolSchema()],
-      tool_choice: { type: "function", name: "create_fixture" },
       temperature
     })
   });
