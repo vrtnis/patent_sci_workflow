@@ -248,7 +248,9 @@ const main = async () => {
 
   const type = options.type ?? "edge-mix";
   const count = Number(options.count ?? DEFAULT_COUNT);
-  const model = options.model ?? DEFAULT_MODEL;
+  const model = (options.model ?? process.env.OPENAI_MODEL ?? DEFAULT_MODEL)
+    .toString()
+    .trim() || DEFAULT_MODEL;
   const temperature = Number(options.temperature ?? DEFAULT_TEMPERATURE);
   const batchTag = options.batch ?? new Date().toISOString().slice(0, 10);
 

@@ -310,7 +310,9 @@ const main = async () => {
   const count = Number(options.count ?? DEFAULT_COUNT);
   const includeFailing = Number(options["include-failing"] ?? 0);
   const type = options.type ?? "edge-mix";
-  const model = options.model ?? DEFAULT_MODEL;
+  const model = (options.model ?? process.env.OPENAI_MODEL ?? DEFAULT_MODEL)
+    .toString()
+    .trim() || DEFAULT_MODEL;
   const temperature = Number(options.temperature ?? DEFAULT_TEMPERATURE);
 
   if (Number.isNaN(count) || count <= 0) {
