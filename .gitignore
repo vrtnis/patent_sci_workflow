@@ -1,0 +1,10 @@
+node_modules
+.next
+out
+.env
+.env.local
+.env.*.local
+cache
+artifacts
+coverage
+.DS_Store
