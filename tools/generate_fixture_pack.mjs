@@ -278,9 +278,9 @@ const callOpenAI = async ({ model, prompt, temperature }) => {
 const buildChallengeFixture = (packId) => {
   const patentNumber = `SYN-CHALLENGE-${packId}`;
   const claimText =
-    "A method comprising: (a) mixing a composition; (b) setting a process window of 10–20; and (c) completing the process.";
+    "A method comprising: (a) mixing a composition; (b) setting a process window of 10~20; and (c) completing the process.";
   const descriptionText =
-    "In one embodiment, the method includes blending the composition and holding the process window at 10–20 before completion.\n\nThe process proceeds by combining the inputs, then finishing the batch without further conditions.";
+    "In one embodiment, the method includes blending the composition and holding the process window at 10~20.\n\nThe process proceeds by combining the inputs, then finishing the batch without further conditions.";
 
   return {
     filename: `${patentNumber}.json`,
