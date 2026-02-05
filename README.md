@@ -110,6 +110,20 @@ Optional flags:
 
 Synthetic fixtures are saved as `tests/fixtures/SYN-<type>-<batch>-NN.json` and automatically validated in `tests/synthetic_fixtures.test.ts`.
 
+### Synthetic fixture packs (with a guaranteed failure)
+Generate a pack in `tests/fixtures/synth/<timestamp>/` with a targeted challenge fixture + test:
+
+```bash
+export OPENAI_API_KEY="your_key_here"
+npm run gen:fixtures -- --count 20 --include-failing 1 --type edge-mix
+```
+
+This writes:
+- `tests/fixtures/synth/<timestamp>/` JSON fixtures + `manifest.json`
+- `tests/fixtures/synth/<timestamp>/challenge-<timestamp>.test.ts` (targeted failing test)
+
+The challenge fixture uses a range notation the extractor does not currently handle, so the test fails predictably until the extractor is updated.
+
 ## Testing
 ```bash
 npm test

@@ -2,7 +2,7 @@ import { mkdir, readdir, writeFile } from "node:fs/promises";
 import path from "node:path";
 
 const DEFAULT_MODEL = "gpt-5.2";
-const DEFAULT_COUNT = 5;
+const DEFAULT_COUNT = 20;
 const DEFAULT_TEMPERATURE = 0.4;
 
 const FIXTURE_TYPES = {
@@ -23,7 +23,7 @@ const FIXTURE_TYPES = {
 };
 
 const usage = () => {
-  console.log(`Usage: node tools/generate_fixtures.mjs --type <type> --count <n> [--model <model>] [--batch <tag>] [--temperature <n>]
+  console.log(`Usage: node tools/generate_fixture_pack.mjs --count <n> --include-failing <0|1> [--type <type>] [--model <model>] [--temperature <n>]
 
 Types: ${Object.keys(FIXTURE_TYPES).join(", ")} | all`);
 };
@@ -227,6 +227,7 @@ const callOpenAI = async ({ model, prompt, temperature }) => {
       ],
       tools: [buildToolSchema()],
       tool_choice: { type: "function", name: "create_fixture" },
+      parallel_tool_calls: false,
       temperature
     })
   });
@@ -239,6 +240,66 @@ const callOpenAI = async ({ model, prompt, temperature }) => {
   return response.json();
 };
 
+const buildChallengeFixture = (packId) => {
+  const patentNumber = `SYN-CHALLENGE-${packId}`;
+  const claimText =
+    "A method comprising: (a) mixing a composition; (b) setting a process window of 10–20; and (c) completing the process.";
+  const descriptionText =
+    "In one embodiment, the method includes blending the composition and holding the process window at 10–20 before completion.\n\nThe process proceeds by combining the inputs, then finishing the batch without further conditions.";
+
+  return {
+    filename: `${patentNumber}.json`,
+    payload: {
+      patentNumber,
+      source: "fixture",
+      claims: [
+        {
+          patent_id: patentNumber,
+          claim_sequence: 1,
+          claim_number: "I",
+          claim_text: claimText,
+          claim_dependent: null
+        },
+        {
+          patent_id: patentNumber,
+          claim_sequence: 2,
+          claim_number: "II",
+          claim_text:
+            "The method of claim I, wherein the mixture is processed in the stated window.",
+          claim_dependent: true
+        }
+      ],
+      description: [
+        {
+          patent_id: patentNumber,
+          description_text: descriptionText
+        }
+      ]
+    }
+  };
+};
+
+const buildChallengeTest = (packId, challengeFilename, packDir) => {
+  const testFile = path.join(
+    "tests",
+    "fixtures",
+    "synth",
+    packId,
+    `challenge-${packId}.test.ts`
+  );
+
+  const relativeFixturePath = `./${challengeFilename}`;
+
+  const content = `import { readFile } from "node:fs/promises";\nimport { describe, expect, it } from "vitest";\nimport { normalizePatentPayload } from "@/compiler/normalize";\nimport { extractWorkflow } from "@/compiler/extract_workflow";\nimport { extractParameters } from "@/compiler/extract_parameters";\nimport { extractGaps } from "@/compiler/gaps";\n\nconst loadFixture = async () => {\n  const raw = await readFile(new URL("${relativeFixturePath}", import.meta.url));\n  return JSON.parse(raw.toString());\n};\n\ndescribe("challenge fixture ${packId}", () => {\n  it("extracts range units or flags a missing-unit gap", async () => {\n    const payload = await loadFixture();\n    const normalized = normalizePatentPayload(payload);\n    const { steps, stepMeta } = extractWorkflow(normalized);\n    const { parameters } = extractParameters(normalized, stepMeta);\n    const { gaps } = extractGaps(normalized, steps, parameters);\n\n    const hasParamWithUnit = parameters.some((param) => Boolean(param.unit));\n    const hasRangeGap = gaps.some((gap) => gap.type === "RANGE_WITHOUT_UNIT");\n\n    expect(hasParamWithUnit || hasRangeGap).toBe(true);\n  });\n});\n`;
+
+  return {
+    testFile,
+    content,
+    absolutePath: path.join(process.cwd(), testFile),
+    packDir: path.join(process.cwd(), packDir)
+  };
+};
+
 const main = async () => {
   const options = parseArgs();
   if (options.help) {
@@ -246,15 +307,27 @@ const main = async () => {
     process.exit(0);
   }
 
-  const type = options.type ?? "edge-mix";
   const count = Number(options.count ?? DEFAULT_COUNT);
+  const includeFailing = Number(options["include-failing"] ?? 0);
+  const type = options.type ?? "edge-mix";
   const model = options.model ?? DEFAULT_MODEL;
   const temperature = Number(options.temperature ?? DEFAULT_TEMPERATURE);
-  const batchTag = options.batch ?? new Date().toISOString().slice(0, 10);
 
   if (Number.isNaN(count) || count <= 0) {
     throw new Error("--count must be a positive number");
   }
+
+  if (Number.isNaN(includeFailing) || includeFailing < 0 || includeFailing > 1) {
+    throw new Error("--include-failing must be 0 or 1");
+  }
+
+  const packId = new Date()
+    .toISOString()
+    .replace(/[:.]/g, "")
+    .replace("T", "-")
+    .replace("Z", "");
+  const packDir = path.join("tests", "fixtures", "synth", packId);
+  const absolutePackDir = path.join(process.cwd(), packDir);
 
   const types =
     type === "all"
@@ -267,17 +340,18 @@ const main = async () => {
     }
   });
 
-  const fixturesDir = path.join(process.cwd(), "tests", "fixtures");
-  await mkdir(fixturesDir, { recursive: true });
+  await mkdir(absolutePackDir, { recursive: true });
 
   const existing = new Set(
-    (await readdir(fixturesDir)).filter((file) => file.endsWith(".json"))
+    (await readdir(absolutePackDir)).filter((file) => file.endsWith(".json"))
   );
 
-  for (let i = 0; i < count; i += 1) {
+  const normalCount = Math.max(count - includeFailing, 0);
+
+  for (let i = 0; i < normalCount; i += 1) {
     const currentType = types[i % types.length];
     const slug = slugify(currentType);
-    const patentNumber = `SYN-${slug}-${batchTag}-${String(i + 1).padStart(2, "0")}`;
+    const patentNumber = `SYN-${slug}-${packId}-${String(i + 1).padStart(2, "0")}`;
     const filename = `${patentNumber}.json`;
 
     if (existing.has(filename)) {
@@ -287,12 +361,11 @@ const main = async () => {
 
     const prompt = buildPrompt(currentType, patentNumber);
 
-    let response;
     let parsed;
 
     for (let attempt = 0; attempt < 3; attempt += 1) {
       try {
-        response = await callOpenAI({ model, prompt, temperature });
+        const response = await callOpenAI({ model, prompt, temperature });
         const toolArgs = extractToolArguments(response);
         if (!toolArgs) {
           throw new Error("No tool call returned");
@@ -312,10 +385,52 @@ const main = async () => {
       throw new Error("Failed to generate fixture");
     }
 
-    const outputPath = path.join(fixturesDir, filename);
+    const outputPath = path.join(absolutePackDir, filename);
     await writeFile(outputPath, JSON.stringify(parsed, null, 2));
     console.log(`Wrote ${outputPath}`);
   }
+
+  let challengeInfo = null;
+  if (includeFailing === 1) {
+    const challenge = buildChallengeFixture(packId);
+    const challengePath = path.join(absolutePackDir, challenge.filename);
+    await writeFile(challengePath, JSON.stringify(challenge.payload, null, 2));
+
+    const challengeTest = buildChallengeTest(
+      packId,
+      challenge.filename,
+      packDir
+    );
+    await writeFile(challengeTest.absolutePath, challengeTest.content);
+
+    challengeInfo = {
+      fixture: challengePath,
+      test: challengeTest.absolutePath,
+      expectedFailure:
+        "challenge fixture should trigger either a parameter with unit or RANGE_WITHOUT_UNIT gap"
+    };
+
+    console.log(`Wrote ${challengePath}`);
+    console.log(`Wrote ${challengeTest.absolutePath}`);
+  }
+
+  const manifest = {
+    packId,
+    createdAt: new Date().toISOString(),
+    model,
+    temperature,
+    count,
+    includeFailing,
+    types,
+    challenge: challengeInfo
+  };
+
+  await writeFile(
+    path.join(absolutePackDir, "manifest.json"),
+    JSON.stringify(manifest, null, 2)
+  );
+
+  console.log(`Fixture pack created at ${absolutePackDir}`);
 };
 
 main().catch((error) => {

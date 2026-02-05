@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "ci": "node tools/ci.mjs",
     "add-fixture-from-patentsview": "node tools/add_fixture.mjs",
-    "fixtures:generate": "node tools/generate_fixtures.mjs"
+    "fixtures:generate": "node tools/generate_fixtures.mjs",
+    "gen:fixtures": "node tools/generate_fixture_pack.mjs"
   },
   "dependencies": {
     "mermaid": "10.9.0",
